@@ -6,7 +6,11 @@ def show(key):
 
     global text
 
-    cleaned_key = str(key).strip("'")
+    if str(key)[0] == "'":
+        cleaned_key = str(key).strip("'")
+    else:
+        cleaned_key = str(key).strip('"')
+
     if cleaned_key == "Key.space":
         cleaned_key = " "
     elif cleaned_key == "Key.enter":
